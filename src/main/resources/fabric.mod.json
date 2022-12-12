@@ -17,6 +17,7 @@
     "atum": "*"
   },
   "breaks": {
-    "lazystronghold": "*"
+    "lazystronghold": "*",
+    "worldpreview": "*"
   }
 }
