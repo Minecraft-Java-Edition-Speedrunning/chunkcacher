@@ -1,3 +1,3 @@
-# Chunk Cacher for 1.16-1.17.1 SSG
+# ChunkCacher
 
-Caches chunk information to speed up world generation
+A Minecraft Fabric mod that caches chunk information to speed up world generation.
