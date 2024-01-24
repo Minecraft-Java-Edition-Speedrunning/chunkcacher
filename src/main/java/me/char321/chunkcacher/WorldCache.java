@@ -6,21 +6,17 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.ChunkSerializer;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.GeneratorOptions;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
 
 public class WorldCache {
-    public static boolean isGenerating = false;
-    private static GeneratorOptions lastGeneratorOptions;
     private static final Map<RegistryKey<World>, Long2ObjectLinkedOpenHashMap<NbtCompound>> cache = new HashMap<>();
-    public static CompletableFuture<List<ChunkPos>> strongholdCache;
+    public static boolean isGenerating = false;
+    public static List<ChunkPos> strongholdCache;
+    private static GeneratorOptions lastGeneratorOptions;
 
     public static void addChunk(ChunkPos chunkPos, Chunk chunk, ServerWorld world) {
         cache.computeIfAbsent(world.getRegistryKey(), k -> new Long2ObjectLinkedOpenHashMap<>()).put(chunkPos.toLong(), ChunkSerializer.serialize(world, chunk));
@@ -39,7 +35,7 @@ public class WorldCache {
     /**
      * Checks if the generator options have changed, if so, clear the cache
      * dude github copilot is so cool it auto generated these comments
-
+     * <p>
      * kept as fallback just in case some Atum update messes anything up
      * not perfect but good enough for that purpose
      */

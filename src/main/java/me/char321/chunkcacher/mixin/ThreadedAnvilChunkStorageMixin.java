@@ -3,26 +3,20 @@ package me.char321.chunkcacher.mixin;
 import com.mojang.datafixers.util.Either;
 import me.char321.chunkcacher.WorldCache;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ChunkHolder;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.server.world.ThreadedAnvilChunkStorage;
+import net.minecraft.server.world.*;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkStatus;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import net.minecraft.world.chunk.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(ThreadedAnvilChunkStorage.class)
 public class ThreadedAnvilChunkStorageMixin {
-
-    @Shadow @Final ServerWorld world;
+    @Shadow
+    @Final
+    ServerWorld world;
 
     @Inject(method = "method_17225", at = @At("RETURN"), remap = false)
     private void addToCache(CallbackInfoReturnable<CompletableFuture<Either<Chunk, ChunkHolder.Unloaded>>> cir) {
@@ -35,9 +29,9 @@ public class ThreadedAnvilChunkStorageMixin {
         }
     }
 
-    /*
-    1.19 changes the return type of getUpdatedChunkNbt to a CompletableFuture, so instead we
-    modify the nbtCompound a bit later in loadChunk to keep compatibility
+    /**
+     * 1.18 changes the return type of getUpdatedChunkNbt to a CompletableFuture, so instead we
+     * modify the nbtCompound a bit later in loadChunk to keep compatibility
      */
     @ModifyVariable(method = "method_17256", at = @At("STORE"), remap = false)
     private NbtCompound loadFromCache(NbtCompound nbtCompound, ChunkPos pos) {

@@ -1,17 +1,11 @@
 package me.char321.chunkcacher.mixin;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtLongArray;
+import net.minecraft.nbt.*;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.ChunkSerializer;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.chunk.ProtoChunk;
+import net.minecraft.world.*;
+import net.minecraft.world.chunk.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 
 import java.util.EnumSet;
 
